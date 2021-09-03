@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# cas
+# Author: Javier Mondragon Martin del Campo
+# Institution: ITESM
+# ID: A01365137
+# Date: 31/08/2021 DD/MM/YYYY
+# Description: Assembly and compile multiple files
+# Warning: The file must not contain any point and terminate with .s
+# Example: cas file1.s file2.s
+
+if [ $# -ge 1 ]
+then
+for a in $*
+do
+echo "Compiling $a"
+if [ "$(echo $a | cut -d. -f2)" = "s" ]
+then
+
+b=$(echo $a | cut -d. -f1)
+as -o $b.o $a
+
+if [ $? -eq 0 ]
+then
+gcc -g -o $b $b.o
+rm $b.o
+fi
+
+else
+echo "Error: $a has a wrong name or extension"
+
+fi
+echo "Finished $a"
+done
+else
+echo "Please at least give one file"
+fi
