@@ -1,0 +1,6 @@
+RECEIVER> Temperature: 15°
+RECEIVER> Record 3: 01/01/01 Mon 00:00:30
+RECEIVER> Temperature: 19°
+RECEIVER> Record 4: 01/01/01 Mon 00:00:40
+RECEIVER> Temperature: 21°
+RECEIVER> Record 5: 01/01/01 Mon 00:00:0A

@@ -1,0 +1,9 @@
+sudo ./i2c -s104 -dw -c2500 -ib 2 0 0
+sudo ./i2c -s104 -dw -c2500 -ib 2 1 85
+sudo ./i2c -s104 -dw -c2500 -ib 2 2 0
+sudo ./i2c -s104 -dw -c2500 -ib 2 3 5
+sudo ./i2c -s104 -dw -c2500 -ib 2 3 59
+sudo ./i2c -s104 -dw -c2500 -ib 2 5 9
+sudo ./i2c -s104 -dw -c2500 -ib 2 6 33
+
+sudo ./i2c -s104 -dw -c2500 -ib 8 0 0 85 0 5 59 9 33
