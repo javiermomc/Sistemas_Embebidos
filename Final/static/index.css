@@ -137,6 +137,11 @@ main{
     outline: none;
 }
 
+.t-error{
+    color: red !important;
+    border-color: red !important;
+}
+
 #disp-box{
     display: flex;
     flex-direction: column;

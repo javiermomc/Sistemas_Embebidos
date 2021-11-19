@@ -10,6 +10,9 @@ from slaves import *
 
 rtc = RTC()
 lcd = LCD()
+tc = TC74()
+
+print(tc.get())
 
 lcd.clear()
 lcd.display_string('Waiting for', 1)
@@ -45,19 +48,31 @@ def manager():
       return jsonify(False)
     
   if data['request'] == 'time':
-    data = rtc.get()
-    print(data)
-    h = hex(data[2])[2:]
-    m = hex(data[1])[2:]
-    s = hex(data[0])[2:]
-    if len(h) == 1:
-      h = '0'+h
-    if len(m) == 1:
-      m = '0'+m
-    if len(s) == 1:
-      s = '0'+s
-    current_time = h+':'+m+':'+s
-    return jsonify(current_time)
+    try:
+      data = rtc.get()
+      print(data)
+      h = hex(data[2])[2:]
+      m = hex(data[1])[2:]
+      s = hex(data[0])[2:]
+      if len(h) == 1:
+        h = '0'+h
+      if len(m) == 1:
+        m = '0'+m
+      if len(s) == 1:
+        s = '0'+s
+      current_time = h+':'+m+':'+s
+      return jsonify(current_time)
+    except:
+      print('No time')
+      return jsonify('error')
+  if data['request'] == 'temp':
+    try:
+      data = tc.get()
+      print(data)
+      return jsonify(data)
+    except:
+      print('No temp')
+      return jsonify('error')
   return('')
 
 

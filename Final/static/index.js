@@ -68,7 +68,27 @@ function changeLCD(){
 document.querySelector('#disp-top').oninput = changeLCD;
 document.querySelector('#disp-bottom').oninput = changeLCD;
 
-timeError = 0;
+tempError = 0;
+
+function time_error(){
+    console.log('TIME ERROR');
+    if(timeError>5){
+        console.log('CONNECTION WITH TIME CLOSED');
+        alert('RTC or master is not giving time.\nEvent suspended, please reload page to resume...');
+        clearInterval(RTCLoop);
+    }
+    timeError++;
+}
+
+function temp_error(){
+    console.log('TEMPERATURE ERROR');
+    if(tempError>5){
+        console.log('CONNECTION WITH TIME CLOSED');
+        alert('TC74 or master is not giving temperature.\nEvent suspended, please reload page to resume...');
+        clearInterval(TCLoop);
+    }
+    tempError++;
+}
 
 function updateTime(){
     data = {
@@ -77,22 +97,55 @@ function updateTime(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            document.querySelector('#time').innerHTML = JSON.parse(this.responseText);
+            let time = JSON.parse(this.responseText);
+            if(time !== 'error'){
+                document.querySelector('#time').innerHTML = time;
+                document.querySelector('.subhead.time').classList.toggle('t-error', false);
+                timeError = 0;
+            }else{
+                document.querySelector('#time').innerHTML = 'ERROR';
+                document.querySelector('.subhead.time').classList.toggle('t-error', true);
+                time_error();
+            }
         }
     };
     xhttp.onerror = function(e){
-        console.log('TIME ERROR');
-        if(timeError>5){
-            console.log('CONNECTION WITH TIME CLOSED');
-            clearInterval(RTCLoop);
-        }
-        timeError++;
+        time_error();
     }
     xhttp.open("POST", "/manager", true);
     xhttp.setRequestHeader("Content-type", "application/json; charset=utf-8");
     xhttp.send(JSON.stringify(data));
 }
+
+function updateTemp(){
+    data = {
+        request: 'temp'
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let temp = JSON.parse(this.responseText);
+            if(temp !== 'error'){
+                document.querySelector('#temp').innerHTML = temp+'°C';
+                document.querySelector('.subhead.temp').classList.toggle('t-error', false);
+                tempError = 0;
+            }else{
+                document.querySelector('#temp').innerHTML = 'ERROR';
+                document.querySelector('.subhead.temp').classList.toggle('t-error', true);
+                temp_error();
+            }
+        }
+    };
+    xhttp.onerror = function(e){
+        temp_error();
+    }
+    xhttp.open("POST", "/manager", true);
+    xhttp.setRequestHeader("Content-type", "application/json; charset=utf-8");
+    xhttp.send(JSON.stringify(data));
+}
+
 var RTCLoop = setInterval(updateTime, 1000);
+var TCLoop = setInterval(updateTemp, 1000);
 
 window.addEventListener('DOMContentLoaded', (event) => {
     document.querySelector('.check.disp').classList.toggle('hide', true);
