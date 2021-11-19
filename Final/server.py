@@ -1,6 +1,7 @@
 # Authors:
 #   Javier Mondragon Martin del Campo
 #   Luis Alejandro Enriquez Solis
+#   Marisa Diaz
 
 from flask import Flask, render_template, url_for, jsonify, request
 from jinja2.utils import consume
