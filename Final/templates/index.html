@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- 
+    Authors: 
+        Javier Mondragon Martin del Campo 
+        Luis Alejandro Enriquez Solis
+-->
+
+<html>
+    <head>
+        <title>IO Things</title>
+        <link rel="stylesheet" href="/static/index.css">
+        <link rel="stylesheet" href="/static/loader.css">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    </head>
+    <body>
+        <header>
+            <div class="subhead">
+                <a id="temp">Temperature</a>
+            </div>
+            <div class="spacer"></div>
+            <div class="title">Jarvis</div>
+            <div class="spacer"></div>
+            <div class="subhead">
+                <a id="time">Time</a>
+            </div>
+        </header>
+        <main>
+            <div onclick="toggleLight()" class="item bold bg-white sw-hover" id="bulb-item">
+                <div class="bulb img on hide"></div>
+                <div class="bulb img off"></div>
+                <div class="bulb on txt hide">ON</div>
+                <div class="bulb off txt">OFF</div>
+            </div>
+            <div class="item">
+                <div id="disp-box">
+                    <div class="bold f-large" id="disp-title">
+                        <div>LCD display</div>
+                        <div class="spinner disp">
+                            <div class="rect1"></div>
+                            <div class="rect2"></div>
+                            <div class="rect3"></div>
+                        </div>
+                        <div class="check disp"></div>
+                        <div class="error disp"></div>
+                    </div>
+                    <div><input id="disp-top" class="focus-input" maxlength="16" onchange="changeLCD()"></div>
+                    <div><input id="disp-bottom" class="focus-input" maxlength="16" onchange="changeLCD()"></div>
+                </div>
+            </div>
+        </main>
+        <script src="/static/index.js"></script>
+    </body>
+</html>
