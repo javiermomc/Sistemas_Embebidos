@@ -11,6 +11,7 @@ from slaves import *
 rtc = RTC()
 lcd = LCD()
 tc = TC74()
+led = Arduino()
 
 print(tc.get())
 
@@ -34,6 +35,7 @@ def manager():
   data = request.get_json()
   if data['request'] == 'light':
     state_bulb = data['body']
+    led.write(state_bulb)
     return jsonify(state_bulb)
   if data['request'] == 'text':
     if state_lcd == False:
