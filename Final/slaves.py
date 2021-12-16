@@ -4,6 +4,14 @@ import smbus
 
 bus = smbus.SMBus(1)
 
+class ARDUINO:
+  __address = 0x08
+  def led_on(self):
+    bus.write_byte(self.__address, 0x1)
+  
+  def led_off(self):
+    bus.write_byte(self.__address, 0x0)
+
 class RTC:
   __address = 0x68
 

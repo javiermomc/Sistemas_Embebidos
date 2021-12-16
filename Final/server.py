@@ -11,8 +11,8 @@ from slaves import *
 rtc = RTC()
 lcd = LCD()
 tc = TC74()
+led = ARDUINO()
 
-print(tc.get())
 
 lcd.clear()
 lcd.display_string('Waiting for', 1)
@@ -34,6 +34,10 @@ def manager():
   data = request.get_json()
   if data['request'] == 'light':
     state_bulb = data['body']
+    if not state_bulb:
+      led.led_on()
+    else:
+      led.led_off()
     return jsonify(state_bulb)
   if data['request'] == 'text':
     if state_lcd == False:
@@ -50,7 +54,6 @@ def manager():
   if data['request'] == 'time':
     try:
       data = rtc.get()
-      print(data)
       h = hex(data[2])[2:]
       m = hex(data[1])[2:]
       s = hex(data[0])[2:]
@@ -68,7 +71,6 @@ def manager():
   if data['request'] == 'temp':
     try:
       data = tc.get()
-      print(data)
       return jsonify(data)
     except:
       print('No temp')
