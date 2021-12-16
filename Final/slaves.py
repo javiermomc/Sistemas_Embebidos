@@ -36,7 +36,7 @@ class TC74:
 
   def get(self):
     return bus.read_byte(self.__address)
-
+ 
 class LCD:
 
   # commands
