@@ -29,12 +29,6 @@ class TC74:
   def get(self):
     return bus.read_byte(self.__address)
  
-class Arduino:
-  __address = 0x64
-
-  def write(self, data):
-    return bus.write_byte(self.__address, data)
-
 class LCD:
 
   # commands
